@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>haiderSY - مكتبة التطبيقات</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --primary-color: #003366; /* أزرق داكن */
+    --bg-color: #f9f9f9;
+    --text-color: #222;
+    --card-bg: #fff;
+    --btn-bg: #003366;
+    --btn-text: #fff;
+  }
+  body.dark {
+    --bg-color: #121212;
+    --text-color: #eee;
+    --card-bg: #1e1e1e;
+    --btn-bg: #00509e;
+  }
+  * {
+    box-sizing: border-box;
+  }
+  body {
+    font-family: 'Cairo', sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    margin: 0;
+    min-height: 100vh;
+  }
+  header {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 20px;
+  }
+  .container {
+    max-width: 1100px;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .logo {
+    font-size: 28px;
+    font-weight: 700;
+  }
+  nav {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+  }
+  nav button {
+    background-color: var(--btn-bg);
+    border: none;
+    color: var(--btn-text);
+    padding: 8px 16px;
+    font-weight: 600;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  nav button:hover {
+    background-color: #001f4d;
+  }
+  main {
+    max-width: 1100px;
+    margin: 30px auto 50px;
+    padding: 0 15px;
+  }
+  #searchInput {
+    width: 100%;
+    padding: 14px 20px;
+    margin-bottom: 25px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    font-size: 18px;
+    transition: border-color 0.3s;
+  }
+  #searchInput:focus {
+    border-color: var(--primary-color);
+    outline: none;
+  }
+  .cards-container {
+    display: grid;
+    gap: 25px;
+    grid-template-columns: repeat(auto-fill,minmax(260px,1fr));
+  }
+  .card {
+    background-color: var(--card-bg);
+    border-radius: 14px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    overflow: hidden;
+    transition: transform 0.25s ease;
+    display: flex;
+    flex-direction: column;
+  }
+  .card:hover {
+    transform: translateY(-6px);
+  }
+  .card img {
+    width: 100%;
+    height: 160px;
+    object-fit: cover;
+  }
+  .card-content {
+    padding: 18px 16px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .card-content h3 {
+    margin: 0 0 12px;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--primary-color);
+  }
+  .card-content a {
+    background-color: var(--primary-color);
+    color: #fff;
+    text-decoration: none;
+    padding: 10px 0;
+    border-radius: 10px;
+    font-weight: 600;
+    text-align: center;
+    display: block;
+    transition: background-color 0.3s;
+  }
+  .card-content a:hover {
+    background-color: #001f4d;
+  }
+  footer {
+    background-color: var(--primary-color);
+    color: white;
+    text-align: center;
+    padding: 16px 10px;
+    font-weight: 600;
+  }
+  /* المودال */
+  .modal {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-color: rgba(0,0,0,0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+  }
+  .modal-content {
+    background-color: var(--card-bg);
+    padding: 30px 25px;
+    border-radius: 14px;
+    width: 95%;
+    max-width: 400px;
+    box-shadow: 0 4px 18px rgba(0,0,0,0.3);
+    text-align: center;
+  }
+  .modal-content h2 {
+    margin-bottom: 22px;
+    color: var(--primary-color);
+  }
+  .modal-content input {
+    width: 100%;
+    padding: 12px 15px;
+    margin: 15px 0 25px;
+    font-size: 17px;
+    border: 1.8px solid #ccc;
+    border-radius: 10px;
+    transition: border-color 0.3s;
+  }
+  .modal-content input:focus {
+    border-color: var(--primary-color);
+    outline: none;
+  }
+  .modal-content button {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 12px 0;
+    width: 100%;
+    font-size: 18px;
+    border-radius: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  .modal-content button:hover {
+    background-color: #001f4d;
+  }
+  .modal-content p {
+    margin-top: 12px;
+    font-weight: 600;
+    color: crimson;
+    min-height: 22px;
+  }
+  .hidden {
+    display: none !important;
+  }
+  /* إعلان تجريبي */
+  .ad-section {
+    max-width: 1100px;
+    margin: 25px auto;
+    padding: 16px;
+    background: #fff3cd;
+    border-radius: 14px;
+    border: 1.5px solid #ffeeba;
+    text-align: center;
+    font-weight: 700;
+    color: #856404;
+    box-shadow: 0 1px 6px rgba(0,0,0,0.1);
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="container">
+    <div class="logo">haiderSY</div>
+    <nav>
+      <button id="themeToggle">الوضع الليلي</button>
+      <button id="adminBtn">دخول الإدمن</button>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section id="apps">
+    <input type="text" id="searchInput" placeholder="ابحث عن تطبيق..." autocomplete="off" />
+    <div class="cards-container" id="appsContainer">
+      <!-- هنا تظهر التطبيقات -->
+    </div>
+  </section>
+
+  <section class="ad-section">
+    إعلان تجريبي: جرّب تطبيقاتنا الجديدة وشاركنا رأيك!
+  </section>
+</main>
+
+<footer>
+  © 2025 جميع الحقوق محفوظة - haiderSY
+</footer>
+
+<!-- مودال تسجيل الدخول -->
+<div class="modal hidden" id="adminPanel">
+  <div class="modal-content">
+    <h2>تسجيل دخول الإدمن</h2>
+    <input type="password" id="adminPass" placeholder="أدخل كلمة المرور" autocomplete="off" />
+    <button id="loginBtn">تسجيل الدخول</button>
+    <button id="closeAdmin">إغلاق</button>
+    <p id="loginMsg"></p>
+  </div>
+</div>
+
+<!-- مودال إضافة تطبيق -->
+<div class="modal hidden" id="addAppPanel">
+  <div class="modal-content">
+    <h2>إضافة تطبيق جديد</h2>
+    <input type="text" id="appTitle" placeholder="اسم التطبيق" autocomplete="off" />
+    <input type="url" id="appImg" placeholder="رابط صورة التطبيق" autocomplete="off" />
+    <input type="url" id="appLink" placeholder="رابط التطبيق" autocomplete="off" />
+    <button id="addAppBtn">إضافة التطبيق</button>
+    <button id="closeAddApp">إغلاق</button>
+  </div>
+</div>
+
+<script>
+  // الوضع الليلي/النهاري
+  const themeToggle = document.getElementById('themeToggle');
+  themeToggle.addEventListener('click', () => {
+    document.body.classList.toggle('dark');
+    themeToggle.textContent = document.body.classList.contains('dark') ? 'الوضع النهاري' : 'الوضع الليلي';
+  });
+
+  // عناصر الإدمن
+  const adminBtn = document.getElementById('adminBtn');
+  const adminPanel = document.getElementById('adminPanel');
+  const loginBtn = document.getElementById('loginBtn');
+  const closeAdmin = document.getElementById('closeAdmin');
+  const loginMsg = document.getElementById('loginMsg');
+
+  const addAppPanel = document.getElementById('addAppPanel');
+  const addAppBtn = document.getElementById('addAppBtn');
+  const closeAddApp = document.getElementById('closeAddApp');
+
+  const appsContainer = document.getElementById('appsContainer');
+  const searchInput = document.getElementById('searchInput');
+
+  // مصفوفة تخزين التطبيقات (تخزين مؤقت في الذاكرة فقط)
+  let apps = [
+    // مثال لتطبيقات أولية (يمكن تعديلها
