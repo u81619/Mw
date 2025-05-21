@@ -1,0 +1,26 @@
+[
+    {
+        "id": 1,
+        "name": "حاسب محمول 1",
+        "image": "uploads/laptop1.jpg",
+        "price_usd": 500,
+        "price_iqd": 750000,
+        "description": "حاسب محمول بمواصفات عالية."
+    },
+    {
+        "id": 2,
+        "name": "حاسب محمول 2",
+        "image": "uploads/laptop2.jpg",
+        "price_usd": 700,
+        "price_iqd": 1050000,
+        "description": "حاسب محمول ممتاز للعمل والدراسة."
+    },
+    {
+        "id": 3,
+        "name": "حاسب محمول 3",
+        "image": "uploads/laptop3.jpg",
+        "price_usd": 650,
+        "price_iqd": 975000,
+        "description": "حاسب محمول مع تصميم مميز."
+    }
+]
