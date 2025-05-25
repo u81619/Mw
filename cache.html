@@ -14,7 +14,6 @@
       position: relative;
       top: 39%;
       z-index: 1;
-      position: relative;
     }
     .video-container {
       position: fixed;
@@ -31,40 +30,33 @@
       height: 100%;
       object-fit: cover;
     }
+    .play-btn {
+      position: absolute;
+      top: 70%;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 10px 20px;
+      background: #ffffff20;
+      border: 2px solid white;
+      color: white;
+      font-size: 20px;
+      cursor: pointer;
+      z-index: 2;
+    }
   </style>
-  <script>
-    history.replaceState(null, null, 'index.html');
-    var histlength = history.length;
-    history.go(-histlength);
-    function DLProgress(e) {
-      Percent = (Math.round(e.loaded / e.total * 100));
-      msgs.innerHTML = "جارٍ تنصيب التخزين المؤقت " + Percent + "%";
-    }
-    function DisplayCacheProgress() {
-      setTimeout(function () {
-        msgs.innerHTML = "تم تنصيب التخزين المؤقت";
-      }, 2000);
-      setTimeout(function () {
-        location.reload();
-      }, 3000);
-    }
-    window.applicationCache.addEventListener("progress", DLProgress, false);
-    window.applicationCache.oncached = function (e) {
-      DisplayCacheProgress();
-    };
-    window.applicationCache.onupdateready = function (e) {
-      DisplayCacheProgress();
-    };
-  </script>
 </head>
 <body>
   <div class="video-container">
-    <video autoplay muted loop playsinline>
-      <source src="123.mp4" type="video/mp4">
+    <video id="vid" loop>
+      <source src="222.mp4" type="video/mp4">
       المتصفح لا يدعم تشغيل الفيديو.
     </video>
   </div>
 
   <div id="msgs" class="info" style='-webkit-font-feature-settings:"tnum";font-feature-settings:"tnum";'></div>
+
+  <button class="play-btn" onclick="document.getElementById('vid').play(); this.style.display='none';">
+    تشغيل الفيديو بالصوت
+  </button>
 </body>
 </html>
